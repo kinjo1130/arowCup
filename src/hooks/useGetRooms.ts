@@ -6,7 +6,7 @@ const getRooms = async (uid: any) => {
   // const collectionRef = collection(db, 'user', uid);
   const roomRef = collection(db, 'groups', uid, 'room');
   const roomSnapshot = await getDocs(roomRef);
-  roomSnapshot.docs.map((doc) => {
+  roomSnapshot.docs.forEach((doc) => {
     doc.data();
     console.log(doc.data());
     console.log(doc.id);
