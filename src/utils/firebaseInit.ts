@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBhO17AEoSfD8TPn9t4Di05zLvBE3Ix0bQ',
-  authDomain: 'nuxt-navi.firebaseapp.com',
-  projectId: 'nuxt-navi',
-  storageBucket: 'nuxt-navi.appspot.com',
-  messagingSenderId: '302422996785',
-  appId: '1:302422996785:web:53878f152ef7f8eb43a210',
+  apiKey: process.env.NEXT_PUBLIC_APIKEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTHDOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECTID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGEBUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGINGSENDERID,
+  appId: process.env.NEXT_PUBLIC_APPID,
 };
 export const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

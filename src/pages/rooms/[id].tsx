@@ -6,8 +6,6 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '@/utils/firebaseInit';
 
 function Id() {
-  // const { userObj } = await getUser();
-  // const uid = userObj?.uid;
   const [userId, setUserId] = useState<string>('');
   const auth = getAuth();
   onAuthStateChanged(auth, async (user) => {
