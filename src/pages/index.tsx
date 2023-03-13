@@ -1,9 +1,12 @@
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import Header from '@/components/Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 // import Footer from '@/components/Footer';
 import createRoom from '@/hooks/useCreateRoom';
 import { useRouter } from 'next/router';
+import createUser from '@/hooks/useCreateUser';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/utils/firebaseInit';
 
 type User = {
   uid: string;
@@ -19,22 +22,8 @@ export default function Home() {
   const router = useRouter();
   const provider = new GoogleAuthProvider();
   const c = console;
-  const [userInfo, setUserInfo] = useState<User | null>();
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const { uid } = user;
-      c.log('ログインしています');
-      c.log(uid);
-      c.log("user's Info", user);
-      if (!user) return;
-      setUserInfo(user);
-    } else {
-      // alert('ログインしてください');
-      c.log('ログインしていません');
-      setUserInfo(null);
-    }
-  });
+  const [userInfo, setUserInfo] = useState<User>();
+  const [roomLists, setRoomLists] = useState([]);
   // 新規登録する関数
   const GoogleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -44,12 +33,42 @@ export default function Home() {
         const { user } = result;
         c.table(user);
         c.log('token', token);
+        if (!user) return;
+        // todo: string | nullの対処法を治す
+        createUser(user.uid, user.displayName ?? '', user.photoURL ?? '');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         c.table(errorCode, errorMessage);
       });
+    const getRooms = async () => {
+      // const { uid, displayName, photoURL } = props;
+      // const collectionRef = collection(db, 'user', uid);
+      if (!userInfo) return;
+      const roomRef = collection(db, 'groups', userInfo?.uid, 'room');
+      const roomSnapshot = await getDocs(roomRef);
+      console.log('roomsnap^^^^^^^^^', roomSnapshot);
+      // setRoomLists(roomSnapshot);
+    };
+    useEffect(() => {
+      if (!userInfo) return;
+      getRooms();
+    }, []);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid } = user;
+        c.log('ログインしています');
+        c.log(uid);
+        c.log("user's Info", user);
+        if (!user) return;
+        setUserInfo(user);
+      } else {
+        // alert('ログインしてください');
+        c.log('ログインしていません');
+        setUserInfo(null);
+      }
+    });
   };
   return (
     <>
@@ -91,7 +110,12 @@ export default function Home() {
           Googleでログイン
         </button>
       )}
-      {/* <Footer /> */}
+      {roomLists.map((roomList: any) => (
+        <ul>
+          <li>{roomList.id}</li>
+          <li>{roomList.title}</li>
+        </ul>
+      ))}
     </>
   );
 }
