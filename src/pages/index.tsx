@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import createUser from '@/hooks/useCreateUser';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/utils/firebaseInit';
+import Link from 'next/link';
 
 type User = {
   uid: string;
@@ -23,7 +24,7 @@ export default function Home() {
   const provider = new GoogleAuthProvider();
   const c = console;
   const [userInfo, setUserInfo] = useState<User>();
-  const [roomLists] = useState([]);
+  const [roomLists, setRoomLists] = useState([]);
   // 新規登録する関数
   const GoogleSignIn = () => {
     signInWithPopup(auth, provider)
@@ -41,35 +42,34 @@ export default function Home() {
         const errorMessage = error.message;
         c.table(errorCode, errorMessage);
       });
-    const getRooms = async () => {
-      // const { uid, displayName, photoURL } = props;
-      // const collectionRef = collection(db, 'user', uid);
-      if (!userInfo) return;
-      const roomRef = collection(db, 'groups', userInfo?.uid, 'room');
-      const roomSnapshot = await getDocs(roomRef);
-      // const hoge = roomSnapshot.docs.map((doc) => doc.data());
-      console.log('roomsnap^^^^^^^^^', roomSnapshot);
-      // setRoomLists(hoge);
-    };
-    useEffect(() => {
-      if (!userInfo) return;
-      getRooms();
-    }, []);
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const { uid } = user;
-        c.log('ログインしています');
-        c.log(uid);
-        c.log("user's Info", user);
-        if (!user) return;
-        setUserInfo(user as User);
-      } else {
-        // alert('ログインしてください');
-        c.log('ログインしていません');
-        setUserInfo(undefined);
-      }
-    });
   };
+  // 入っているルームを取得する関数
+  const getRooms = async () => {
+    // const { uid, displayName, photoURL } = props;
+    // const collectionRef = collection(db, 'user', uid);
+    if (!userInfo) return;
+    const roomRef = collection(db, 'groups', userInfo?.uid, 'room');
+    const roomSnapshot = await getDocs(roomRef);
+    console.log('roomsnap^^^^^^^^^', roomSnapshot);
+    setRoomLists(roomSnapshot.docs as never[]);
+  };
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const { uid } = user;
+      c.log('ログインしています');
+      c.log(uid);
+      c.log("user's Info", user);
+      setUserInfo(user as User);
+    } else {
+      // alert('ログインしてください');
+      c.log('ログインしていません');
+      setUserInfo(undefined);
+    }
+  });
+  useEffect(() => {
+    console.log('useEffect');
+    getRooms();
+  }, [userInfo]);
   return (
     <>
       {userInfo ? <Header title="タクシーアプリ" imgSrc={userInfo.photoURL} /> : <Header title="たくアプ" />}
@@ -112,8 +112,9 @@ export default function Home() {
       )}
       {roomLists.map((roomList: any) => (
         <ul>
-          <li>{roomList.id}</li>
-          <li>{roomList.title}</li>
+          <Link href={`rooms/${roomList.id}`}>
+            <li key={roomList.id}>{roomList.id}</li>
+          </Link>
         </ul>
       ))}
     </>
