@@ -23,16 +23,15 @@ export default function Home() {
   const provider = new GoogleAuthProvider();
   const c = console;
   const [userInfo, setUserInfo] = useState<User>();
-  const [roomLists, setRoomLists] = useState([]);
+  const [roomLists] = useState([]);
   // 新規登録する関数
   const GoogleSignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const token = credential.accessToken;
         const { user } = result;
         c.table(user);
-        c.log('token', token);
+        // c.log('token', token);
         if (!user) return;
         // todo: string | nullの対処法を治す
         createUser(user.uid, user.displayName ?? '', user.photoURL ?? '');
@@ -48,8 +47,9 @@ export default function Home() {
       if (!userInfo) return;
       const roomRef = collection(db, 'groups', userInfo?.uid, 'room');
       const roomSnapshot = await getDocs(roomRef);
+      // const hoge = roomSnapshot.docs.map((doc) => doc.data());
       console.log('roomsnap^^^^^^^^^', roomSnapshot);
-      // setRoomLists(roomSnapshot);
+      // setRoomLists(hoge);
     };
     useEffect(() => {
       if (!userInfo) return;
@@ -62,11 +62,11 @@ export default function Home() {
         c.log(uid);
         c.log("user's Info", user);
         if (!user) return;
-        setUserInfo(user);
+        setUserInfo(user as User);
       } else {
         // alert('ログインしてください');
         c.log('ログインしていません');
-        setUserInfo(null);
+        setUserInfo(undefined);
       }
     });
   };

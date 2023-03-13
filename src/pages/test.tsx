@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const motionsTest = () => {
+function Test() {
   const [accelerationX, setAccelerationX] = useState<number>(0);
   const [accelerationY, setAccelerationY] = useState<number>(0);
   const [accelerationZ, setAccelerationZ] = useState<number>(0);
@@ -14,11 +14,20 @@ const motionsTest = () => {
   });
   return (
     <div>
-      <span>{accelerationX}</span>
-      <span>{accelerationY}</span>
-      <span>{accelerationZ}</span>
+      <span>
+        x軸
+        {accelerationX}
+      </span>
+      <span>
+        y軸
+        {accelerationY}
+      </span>
+      <span>
+        z軸
+        {accelerationZ}
+      </span>
     </div>
   );
-};
+}
 
-export default motionsTest;
+export default Test;
