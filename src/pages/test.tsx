@@ -10,7 +10,7 @@ type LatLntLists = {
   lat: number;
   lng: number;
 }[];
-function Home() {
+function Test() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
   const [inputText, setInputText] = useState<string>('福岡');
@@ -53,7 +53,6 @@ function Home() {
         })
         .catch((error) => {
           console.log('geoCodingのerror', error);
-          setIsLoading(false);
         });
     });
   };
@@ -79,7 +78,7 @@ function Home() {
     console.log('押したよ');
     // HTTP POSTリクエストを送信する
     try {
-      const getRes = await fetch(process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT as string, {
+      const getRes = await fetch('http://localhost:3000/api/chatGPT', {
         method: 'POST',
         body: JSON.stringify(inputText),
       });
@@ -89,7 +88,6 @@ function Home() {
       await geoCoding();
     } catch (error) {
       console.log('error', error);
-      setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -162,4 +160,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Test;
