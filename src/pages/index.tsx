@@ -24,18 +24,6 @@ function Home() {
     lat: 35.7022589,
     lng: 139.7744733,
   };
-  const touster = (errorText: string) => {
-    toast.error(errorText, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
-  };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
     console.log('geoCodingが動いてる');
@@ -48,8 +36,9 @@ function Home() {
       await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
         method: 'GET',
       })
-        .then((response) => {
-          const json = response.json();
+        .then(async (response) => {
+          const json = await response.json();
+          if (json.status === 'ZERO_RESULTS') return;
           json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
@@ -66,7 +55,16 @@ function Home() {
         .catch((error) => {
           console.log('geoCodingのerror', error);
           setIsLoading(false);
-          touster(`エラーが発生しました。${error.message}`);
+          toast.error(`エラーが発生しました。${error.message}`, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
         });
     });
   };
@@ -103,7 +101,16 @@ function Home() {
     } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);
-      touster(`エラーが発生しました。${error.message}`);
+      toast.error(`エラーが発生しました。${error.message}`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   };
   useEffect(() => {
