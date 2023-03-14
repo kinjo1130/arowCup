@@ -3,15 +3,20 @@
 // import GoogleMapReact from 'google-map-react';
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
+import Header from '@/components/Header';
 
+type LatLntLists = {
+  placeName: string;
+  lat: number;
+  lng: number;
+}[];
 function Home() {
-  // const [TripRoot, setTripRoot] = useState();
   const [tripLists, setTripLists] = useState<string[]>([]);
-  const [latLntLists, setLatLntLists] = useState([]);
+  const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
   const [inputText, setInputText] = useState<string>('福岡');
-  const [map, setMap] = useState(null);
-  const [maps, setMaps] = useState(null);
-  const [marker, setMarker] = useState(null);
+  // const [map, setMap] = useState(null);
+  // const [maps, setMaps] = useState(null);
+  // const [marker, setMarker] = useState(null);
 
   const defaultLatLng = {
     lat: 35.7022589,
@@ -35,7 +40,11 @@ function Home() {
               lng: data.results[0].geometry.location.lng,
             };
             console.log('geoCodingList', geoCodingList);
-            setLatLntLists((prev) => [...prev, geoCodingList]);
+            // setLatLntLists((prev) => [...prev, geoCodingList]);
+            setLatLntLists({
+              ...latLntLists,
+              ...geoCodingList,
+            });
             console.log('latLntLists', latLntLists);
           });
         })
@@ -127,6 +136,7 @@ function Home() {
   }, [tripLists]);
   return (
     <div>
+      <Header />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -170,7 +180,7 @@ function Home() {
             defaultCenter={defaultLatLng}
             defaultZoom={16}
             onGoogleApiLoaded={handleApiLoaded}
-            onClick={setLatLng}
+            // onClick={setLatLng}
           />
         </div>
       )}
