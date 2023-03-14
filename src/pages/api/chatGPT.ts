@@ -31,7 +31,6 @@ export default async function chatGPT(req: NextApiRequest, res: NextApiResponse)
 
   // APIエンドポイントを設定する
   const endpoint = process.env.ENDPOINT ?? '';
-  console.log('endpoint: ', endpoint);
 
   // APIリクエストボディを設定する
   const requestBody = {
