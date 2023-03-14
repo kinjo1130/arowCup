@@ -4,13 +4,14 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Header from '@/components/Header';
+import { toast } from 'react-toastify';
 
 type LatLntLists = {
   placeName: string;
   lat: number;
   lng: number;
 }[];
-function Test() {
+function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
   const [inputText, setInputText] = useState<string>('福岡');
@@ -23,13 +24,25 @@ function Test() {
     lat: 35.7022589,
     lng: 139.7744733,
   };
+  const touster = (errorText: string) => {
+    toast.error(errorText, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
-    console.log('geoCoding');
-    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
+    console.log('geoCodingが動いてる');
     if (!tripLists) {
       console.log('tripListsがないよ');
     }
+    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
     tripLists.forEach(async (tripList) => {
       if (!tripList) return;
       await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
@@ -37,8 +50,7 @@ function Test() {
       })
         .then((response) => {
           const json = response.json();
-          json.then((data) => {
-            console.log('data', data);
+          json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
               lat: data.results[0].geometry.location.lat,
@@ -53,6 +65,8 @@ function Test() {
         })
         .catch((error) => {
           console.log('geoCodingのerror', error);
+          setIsLoading(false);
+          touster(`エラーが発生しました。${error.message}`);
         });
     });
   };
@@ -78,22 +92,23 @@ function Test() {
     console.log('押したよ');
     // HTTP POSTリクエストを送信する
     try {
-      const getRes = await fetch('http://localhost:3000/api/chatGPT', {
+      const getRes = await fetch(process.env.NEXT_PUBLIC_LOCAL_ENDPOINT as string, {
         method: 'POST',
         body: JSON.stringify(inputText),
       });
       const responseBody = await getRes.json();
-      console.log('res', responseBody);
+      console.log('APIからのres', responseBody);
       await setTripLists(responseBody);
-      await geoCoding();
-    } catch (error) {
+      // ここで関数を回すと、tripListsが空になってしまう
+    } catch (error: any) {
       console.log('error', error);
+      setIsLoading(false);
+      touster(`エラーが発生しました。${error.message}`);
     }
   };
   useEffect(() => {
     console.log('useEffect');
     geoCoding();
-    console.log('latLntLists', latLntLists);
   }, [tripLists]);
   return (
     <div>
@@ -101,7 +116,7 @@ function Test() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          callChatGPT();
+          // testDisabled();
         }}
       >
         <input
@@ -115,17 +130,40 @@ function Test() {
           }}
           required
         />
-        <button
-          type="submit"
-          onSubmit={(e) => {
-            console.log('ChatGPTのAPIをコール');
-            e.preventDefault();
-            callChatGPT();
-          }}
-          className="bg-black/30 hover:bg-black/50 text-white font-bold py-2 px-4 rounded"
-        >
-          {isLoading ? 'Loading...' : 'ルートを生成する'}
-        </button>
+        {latLntLists.length > 0 ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              console.log('ChatGPTのAPIを再コール');
+              e.preventDefault();
+              // ここでおかしい気がする(ピンがちゃんと出ない)
+              setTripLists([]);
+              setLatLntLists([]);
+              setTimeout(() => {
+                callChatGPT();
+              }, 1000);
+              // testDisabled();
+            }}
+            disabled={isLoading}
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+          >
+            {isLoading ? 'Loading...' : 'ルートを再生成する'}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={(e) => {
+              console.log('ChatGPTのAPIをコール');
+              e.preventDefault();
+              callChatGPT();
+              // testDisabled();
+            }}
+            disabled={isLoading}
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+          >
+            {isLoading ? 'Loading...' : 'ルートを生成する'}
+          </button>
+        )}
       </form>
       {/* <button
         type="button"
@@ -137,8 +175,12 @@ function Test() {
       >
         APIてすとコール
       </button> */}
-      <p>{tripLists}</p>
-      {latLntLists.length > 0 && (
+      <ul>
+        {tripLists.map((tripList) => (
+          <li key={tripList}>{tripList}</li>
+        ))}
+      </ul>
+      {latLntLists.length >= 6 && (
         <div
           style={{
             height: '500px',
@@ -152,6 +194,7 @@ function Test() {
             defaultCenter={defaultLatLng}
             defaultZoom={16}
             onGoogleApiLoaded={handleApiLoaded}
+            yesIWantToUseGoogleMapApiInternals
             // onClick={setLatLng}
           />
         </div>
@@ -160,4 +203,4 @@ function Test() {
   );
 }
 
-export default Test;
+export default Home;
