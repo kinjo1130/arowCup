@@ -74,7 +74,6 @@ function Home() {
           lat: item.lat,
           lng: item.lng,
         },
-        title: 'test',
         label: item.placeName,
         map,
       });
@@ -124,6 +123,7 @@ function Home() {
           e.preventDefault();
           // testDisabled();
         }}
+        className="flex flex-col items-center justify-center mt-10"
       >
         <input
           type="text"
