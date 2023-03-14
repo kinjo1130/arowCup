@@ -14,7 +14,7 @@ type LatLntLists = {
 function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
-  const [inputText, setInputText] = useState<string>('');
+  const [inputText, setInputText] = useState<string>('福岡');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [map, setMap] = useState(null);
   // const [maps, setMaps] = useState(null);
@@ -96,7 +96,7 @@ function Home() {
     console.log('押したよ');
     // HTTP POSTリクエストを送信する
     try {
-      const getRes = await fetch(process.env.NEXT_PUBLIC_LOCAL_ENDPOINT as string, {
+      const getRes = await fetch('http://127.0.0.1:5001/nuxt-navi/us-central1/chatGPT', {
         method: 'POST',
         body: JSON.stringify(inputText),
       });

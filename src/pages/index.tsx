@@ -14,7 +14,7 @@ type LatLntLists = {
 function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
-  const [inputText, setInputText] = useState<string>('');
+  const [inputText, setInputText] = useState<string>('福岡');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [map, setMap] = useState(null);
   // const [maps, setMaps] = useState(null);
