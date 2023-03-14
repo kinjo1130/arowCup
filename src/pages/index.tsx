@@ -37,9 +37,9 @@ function Home() {
         method: 'GET',
       })
         .then(async (response) => {
-          const json = await response.json();
-          console.log('json', json);
-          json.then((data: any) => {
+          const json = response.json();
+          console.log('json', await json);
+          await json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
               lat: data.results[0].geometry.location.lat,
@@ -189,7 +189,7 @@ function Home() {
           <li key={tripList}>{tripList}</li>
         ))}
       </ul>
-      {latLntLists.length >= 4 && (
+      {latLntLists.length > 4 && (
         <div
           style={{
             height: '500px',
