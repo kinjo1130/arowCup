@@ -39,18 +39,22 @@ function Home() {
         .then(async (response) => {
           const json = response.json();
           console.log('json', await json);
-          await json.then((data: any) => {
-            const geoCodingList = {
-              placeName: tripList,
-              lat: data.results[0].geometry.location.lat,
-              lng: data.results[0].geometry.location.lng,
-            };
-            console.log('geoCodingList', geoCodingList);
-            // ここの処理がちゃんと動いてないな
-            // setLatLntLists((prev) => [...prev, geoCodingList]);
-            setLatLntLists((prev) => [...prev, geoCodingList]);
-            setIsLoading(false);
-          });
+          if (response.ok) {
+            await json.then(async (data: any) => {
+              const geoCodingList = {
+                placeName: tripList,
+                lat: await data.results[0].geometry.location.lat,
+                lng: await data.results[0].geometry.location.lng,
+              };
+              console.log('geoCodingList', geoCodingList);
+              // ここの処理がちゃんと動いてないな
+              // setLatLntLists((prev) => [...prev, geoCodingList]);
+              setLatLntLists((prev) => [...prev, geoCodingList]);
+              setIsLoading(false);
+            });
+          } else {
+            alert(`Geocode was not successful for the following reason: ${json}`);
+          }
         })
         .catch((error) => {
           alert(`エラーが発生しました。${error.message}`);
