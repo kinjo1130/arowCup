@@ -84,7 +84,6 @@ function Home() {
         },
         title: 'test',
         label: item.placeName,
-        animation: google.maps.Animation.DROP,
         map,
       });
       bounds.extend(marker.position);
