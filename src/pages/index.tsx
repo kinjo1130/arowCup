@@ -4,6 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Header from '@/components/Header';
+import { toast } from 'react-toastify';
 
 type LatLntLists = {
   placeName: string;
@@ -22,6 +23,18 @@ function Home() {
   const defaultLatLng = {
     lat: 35.7022589,
     lng: 139.7744733,
+  };
+  const touster = (errorText: string) => {
+    toast.error(errorText, {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
   };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
@@ -54,6 +67,7 @@ function Home() {
         .catch((error) => {
           console.log('geoCodingのerror', error);
           setIsLoading(false);
+          touster(`エラーが発生しました。${error.message}`);
         });
     });
   };
@@ -87,9 +101,10 @@ function Home() {
       console.log('res', responseBody);
       await setTripLists(responseBody);
       await geoCoding();
-    } catch (error) {
+    } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);
+      touster(`エラーが発生しました。${error.message}`);
     }
   };
   useEffect(() => {
@@ -97,13 +112,13 @@ function Home() {
     geoCoding();
     console.log('latLntLists', latLntLists);
   }, [tripLists]);
-  const testDisabled = () => {
-    setIsLoading(true);
-    console.log('testDisabled');
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 8000);
-  };
+  // const testDisabled = () => {
+  //   setIsLoading(true);
+  //   console.log('testDisabled');
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 8000);
+  // };
   return (
     <div>
       <Header />

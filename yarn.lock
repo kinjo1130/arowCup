@@ -1602,6 +1602,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"clsx@npm:^1.1.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: cae17fd0fd5ea449d000c681169a8a6f7add4929b369cae3e2d5b604fba2798b39334121e467dbf6ac752562c28a6894a443f30761b004317c0668eb031af52d
+  languageName: node
+  linkType: hard
+
 "color-convert@npm:^2.0.1":
   version: 2.0.1
   resolution: "color-convert@npm:2.0.1"
@@ -3543,6 +3550,7 @@ __metadata:
     prettier: "npm:^2.7.1"
     react: "npm:18.2.0"
     react-dom: "npm:18.2.0"
+    react-toastify: "npm:^9.1.1"
     tailwindcss: "npm:^3.2.7"
     typescript: "npm:^4.8.4"
   languageName: unknown
@@ -4153,6 +4161,18 @@ __metadata:
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: 0c9adc5d984db733fb1dd298f3e94cdec66bc328d27fb11df65971d2cc9a299008bc64baab8fe8e79943df85b445a1008b2cc9e270825d0fd056e5a0d2df8de6
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^9.1.1":
+  version: 9.1.1
+  resolution: "react-toastify@npm:9.1.1"
+  dependencies:
+    clsx: "npm:^1.1.1"
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: a6c5f74ed248980b7c0ba17932f3938b5e971afe01954f860cdd5b75f937f81c690ae4c05b978bdcb53d4ee361f5d6eb44f2c832f13974f5aff33a8b91f1c8e2
   languageName: node
   linkType: hard
 
