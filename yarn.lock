@@ -555,6 +555,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@googlemaps/js-api-loader@npm:^1.13.2, @googlemaps/js-api-loader@npm:^1.7.0":
+  version: 1.15.1
+  resolution: "@googlemaps/js-api-loader@npm:1.15.1"
+  dependencies:
+    fast-deep-equal: "npm:^3.1.3"
+  checksum: 0dc7b2219b377941a8099af947fefdcf0ff414b495116c5799aac88df9723c4c5f41afe03a0c734eb8e7ab048a7e1e182eb5e607a2c812e230163ebe73e0ff10
+  languageName: node
+  linkType: hard
+
+"@googlemaps/react-wrapper@npm:^1.1.35":
+  version: 1.1.35
+  resolution: "@googlemaps/react-wrapper@npm:1.1.35"
+  dependencies:
+    "@googlemaps/js-api-loader": "npm:^1.13.2"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: b15de353853eb26f07e1d46310e202c5989b33a92379ec3cf2802e6e10687d85593181c366dc3467f49da3236ca01abab9e3ee5e4e4122be1740aa6c8b83a512
+  languageName: node
+  linkType: hard
+
 "@grpc/grpc-js@npm:~1.7.0":
   version: 1.7.3
   resolution: "@grpc/grpc-js@npm:1.7.3"
@@ -617,6 +637,13 @@ __metadata:
   version: 1.2.1
   resolution: "@humanwhocodes/object-schema@npm:1.2.1"
   checksum: c860f96faaaaecd6c5c4ee6912f7c761579031b464c3cf55832e59e18b116968d89b570ef6a9a10b1670a67e7998a530c8c549b4a41b118153340772ad10cea9
+  languageName: node
+  linkType: hard
+
+"@mapbox/point-geometry@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@mapbox/point-geometry@npm:0.1.0"
+  checksum: ea703e2b6af4f813f364a3e28802873a12647948b638a3f226b2a8b8f33cca0ff899b0c6878a635c4205353b8e958b252a64f6c2ed8c766ddde49e1e43905f1e
   languageName: node
   linkType: hard
 
@@ -867,6 +894,15 @@ __metadata:
   version: 2.0.0
   resolution: "@tootallnate/once@npm:2.0.0"
   checksum: d9f7f2130a0a2e1ea50f3bc90b83a8b99c913bbb80d7a1706f7f4730292ef299d18443c3b57a42dfb17c6559c9085e13f751b1b6c969bcff7bee3eeaf9da4dec
+  languageName: node
+  linkType: hard
+
+"@types/google-map-react@npm:^2":
+  version: 2.1.7
+  resolution: "@types/google-map-react@npm:2.1.7"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 257640e72b664d7b560d6c090d1c9b494ed8fb65a628bc4aaec7e447a28a6be7430f7c4fc9fd81e161eae12871493aa8668e921bec61d71780eca30a6a0f8eeb
   languageName: node
   linkType: hard
 
@@ -2231,6 +2267,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eventemitter3@npm:^4.0.4":
+  version: 4.0.7
+  resolution: "eventemitter3@npm:4.0.7"
+  checksum: e6ecb1ac2fee59b0ba0e778564cec0a1fe0631f28a50f24aa0e7ba367e718c5f9b23156fb2c1d238bcebe7923dfff37a63c39b519121a47c7bf78c38c96febd8
+  languageName: node
+  linkType: hard
+
 "execa@npm:^6.1.0":
   version: 6.1.0
   resolution: "execa@npm:6.1.0"
@@ -2252,6 +2295,13 @@ __metadata:
   version: 3.1.3
   resolution: "fast-deep-equal@npm:3.1.3"
   checksum: 5f83fabf1f0bac0df5117e881ee15756dc8a9ee48c8020ed63cb84a7935d78c338dc0982b3b7b6ad0792905f5ef0c35293db9cae2f3208a6f09071c43887a02f
+  languageName: node
+  linkType: hard
+
+"fast-equals@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "fast-equals@npm:5.0.0"
+  checksum: 3527faaac31b3d4b23f3a758326418e706b01a6991cbb1824e12fb2eafa3c2d49ece74a147a06a0211837155e98678a84f1247c7e8eb0b203c44a3cafc810018
   languageName: node
   linkType: hard
 
@@ -2577,6 +2627,21 @@ __metadata:
     merge2: "npm:^1.4.1"
     slash: "npm:^3.0.0"
   checksum: 3047df770874d103dafe26084f998f562e8a8e2930896940e0bdbdc27c1f7574570f231dc2aa981d941dc84c93db05ce7cd81667488b040412e88740186fc22e
+  languageName: node
+  linkType: hard
+
+"google-map-react@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "google-map-react@npm:2.2.0"
+  dependencies:
+    "@googlemaps/js-api-loader": "npm:^1.7.0"
+    "@mapbox/point-geometry": "npm:^0.1.0"
+    eventemitter3: "npm:^4.0.4"
+    prop-types: "npm:^15.7.2"
+  peerDependencies:
+    react: ^16.0.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.0.0 || ^17.0.0 || ^18.0.0
+  checksum: 471f5644510bb793391d9a18c266a20e4cd47f982d2033d4d68c356183cf7078b75ecc2ef69d4db96d939c0015a900285dcb2dfec26bb6e3dc1f206bdc9375af
   languageName: node
   linkType: hard
 
@@ -3426,7 +3491,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "next.js-base@workspace:."
   dependencies:
+    "@googlemaps/react-wrapper": "npm:^1.1.35"
     "@next/eslint-plugin-next": "npm:^13.0.1"
+    "@types/google-map-react": "npm:^2"
     "@types/node": "npm:^18.11.9"
     "@types/react": "npm:^18.0.24"
     "@types/react-dom": "npm:^18.0.8"
@@ -3438,7 +3505,9 @@ __metadata:
     eslint-config-next: "npm:^13.0.1"
     eslint-config-prettier: "npm:^8.5.0"
     eslint-plugin-react: "npm:^7.31.10"
+    fast-equals: "npm:^5.0.0"
     firebase: "npm:^9.17.2"
+    google-map-react: "npm:^2.2.0"
     husky: "npm:^8.0.1"
     lint-staged: "npm:^13.0.3"
     next: "npm:13.0.1"
@@ -3964,7 +4033,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

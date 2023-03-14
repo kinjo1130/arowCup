@@ -12,13 +12,17 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
+    "@googlemaps/react-wrapper": "^1.1.35",
+    "fast-equals": "^5.0.0",
     "firebase": "^9.17.2",
+    "google-map-react": "^2.2.0",
     "next": "13.0.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^13.0.1",
+    "@types/google-map-react": "^2",
     "@types/node": "^18.11.9",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",

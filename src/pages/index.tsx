@@ -1,122 +1,181 @@
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from 'firebase/auth';
-import Header from '@/components/Header';
-import { useEffect, useState } from 'react';
-// import Footer from '@/components/Footer';
-import createRoom from '@/hooks/useCreateRoom';
-import { useRouter } from 'next/router';
-import createUser from '@/hooks/useCreateUser';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '@/utils/firebaseInit';
-import Link from 'next/link';
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable max-len */
+// import GoogleMapReact from 'google-map-react';
+import React, { useEffect, useState } from 'react';
+import GoogleMapReact from 'google-map-react';
 
-type User = {
-  uid: string;
-  displayName: string;
-  email: string;
-  photoURL: string;
-  emailVerified: boolean;
-  phoneNumber: string;
-  isAnonymous: boolean;
-};
-export default function Home() {
-  const auth = getAuth();
-  const router = useRouter();
-  const provider = new GoogleAuthProvider();
-  const c = console;
-  const [userInfo, setUserInfo] = useState<User>();
-  const [roomLists, setRoomLists] = useState([]);
-  // 新規登録する関数
-  const GoogleSignIn = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        // const token = credential.accessToken;
-        const { user } = result;
-        c.table(user);
-        // c.log('token', token);
-        if (!user) return;
-        // todo: string | nullの対処法を治す
-        createUser(user.uid, user.displayName ?? '', user.photoURL ?? '');
+function Home() {
+  // const [TripRoot, setTripRoot] = useState();
+  const [tripLists, setTripLists] = useState<string[]>([]);
+  const [latLntLists, setLatLntLists] = useState([]);
+  const [inputText, setInputText] = useState<string>('福岡');
+  const [map, setMap] = useState(null);
+  const [maps, setMaps] = useState(null);
+  const [marker, setMarker] = useState(null);
+
+  const defaultLatLng = {
+    lat: 35.7022589,
+    lng: 139.7744733,
+  };
+  // todo: 名所から座標を取得する
+  const geoCoding = async () => {
+    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
+    tripLists.forEach(async (tripList) => {
+      if (!tripList) return;
+      await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
+        method: 'GET',
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        c.table(errorCode, errorMessage);
+        .then((response) => {
+          const json = response.json();
+          json.then((data) => {
+            console.log('data', data);
+            const geoCodingList = {
+              placeName: tripList,
+              lat: data.results[0].geometry.location.lat,
+              lng: data.results[0].geometry.location.lng,
+            };
+            console.log('geoCodingList', geoCodingList);
+            setLatLntLists((prev) => [...prev, geoCodingList]);
+            console.log('latLntLists', latLntLists);
+          });
+        })
+        .catch((error) => {
+          console.log('geoCodingのerror', error);
+        });
+    });
+  };
+
+  const handleApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
+    const bounds = new maps.LatLngBounds();
+    latLntLists.forEach((item: any) => {
+      const marker = new maps.Marker({
+        position: {
+          lat: item.lat,
+          lng: item.lng,
+        },
+        map,
       });
+      bounds.extend(marker.position);
+    });
+    map.fitBounds(bounds);
   };
-  // 入っているルームを取得する関数
-  const getRooms = async () => {
-    // const { uid, displayName, photoURL } = props;
-    // const collectionRef = collection(db, 'user', uid);
-    if (!userInfo) return;
-    const roomRef = collection(db, 'groups', userInfo?.uid, 'room');
-    const roomSnapshot = await getDocs(roomRef);
-    console.log('roomsnap^^^^^^^^^', roomSnapshot);
-    setRoomLists(roomSnapshot.docs as never[]);
+
+  const callChatGPT = async () => {
+    console.log('押したよ');
+    // APIキーとエンジンIDを設定する
+    const apiKey = process.env.NEXT_PUBLIC_CHATGPT_API_KEY;
+
+    // APIエンドポイントを設定する
+    const endpoint = process.env.NEXT_PUBLIC_ENDPOINT ?? '';
+
+    // APIリクエストボディを設定する
+    const requestBody = {
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          // todo: ここにユーザーの入力を入れる
+          content: `${inputText}観光コース 地名 リスト 6個 説明なし`,
+        },
+      ],
+      /**
+       * サンプリング操作、0.8のような高い値は出力をよりランダムにし、0.2のような低い値は出力を収束させる
+       */
+      temperature: 0.9,
+      /**
+       * 0.1 は上位 10% の確率の塊からなるトークンのみを考慮することを意味する
+       * `temperature` によるサンプリングの代替となるが併用は推奨されない
+       */
+      top_p: 1,
+      /**
+       * 各入力メッセージに対して生成するチャット補完の選択肢の数
+       */
+      n: 1,
+      /**
+       * presence penalty は少なくとも1回サンプリングされた全てのトークンに適用される1回限り加算する寄与
+       * frequency penalty は特定のトークンが既にサンプリングされた頻度に比例する寄与
+       */
+      presence_penalty: 0,
+      frequency_penalty: 0,
+    };
+
+    // APIリクエストヘッダを設定する
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${apiKey}`,
+    };
+
+    // HTTP POSTリクエストを送信する
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(requestBody),
+    });
+
+    // APIレスポンスを取得する
+    const responseBody = await response.json();
+
+    // レスポンス結果をコンソールに出力する
+    console.log(responseBody.choices[0].message.content);
+    console.log(responseBody);
+    const format = responseBody.choices[0].message.content.split(/\s*[1-6]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
+    console.log('format', format);
+    setTripLists(format);
   };
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const { uid } = user;
-      c.log('ログインしています');
-      c.log(uid);
-      c.log("user's Info", user);
-      setUserInfo(user as User);
-    } else {
-      // alert('ログインしてください');
-      c.log('ログインしていません');
-      setUserInfo(undefined);
-    }
-  });
   useEffect(() => {
-    console.log('useEffect');
-    getRooms();
-  }, [userInfo]);
+    geoCoding();
+  }, [tripLists]);
   return (
-    <>
-      {userInfo ? <Header title="タクシーアプリ" imgSrc={userInfo.photoURL} /> : <Header title="たくアプ" />}
-      {userInfo ? (
-        <div>
-          <p>
-            {userInfo.displayName}
-            さん、こんにちは
-          </p>
-          <div className="w-[80%] mx-auto">
-            <button
-              type="button"
-              className="border bg-black/40 rounded-lg p-10"
-              onClick={() => {
-                c.log('ルームを作る');
-                if (!userInfo) return;
-                const createRoomObj = {
-                  uid: userInfo?.uid,
-                  displayName: userInfo?.displayName,
-                  photoURL: userInfo?.photoURL,
-                };
-                createRoom(createRoomObj)
-                  .then(() => {
-                    console.log('成功');
-                    router.push(`/rooms/${userInfo.uid}`);
-                  })
-                  .catch((err) => {
-                    c.log(err);
-                  });
-              }}
-            >
-              <div className="text-center">+</div>
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button type="button" onClick={GoogleSignIn}>
-          Googleでログイン
+    <div>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          callChatGPT();
+        }}
+      >
+        <input
+          type="text"
+          value={inputText}
+          className="border-2 border-gray-300"
+          onChange={(e) => {
+            e.preventDefault();
+            setInputText(e.target.value);
+            console.log('inputText', inputText);
+          }}
+          required
+        />
+        <button
+          type="submit"
+          onSubmit={(e) => {
+            console.log('ChatGPTのAPIをコール');
+            e.preventDefault();
+            callChatGPT();
+          }}
+        >
+          APIコール
         </button>
+      </form>
+      <p>{tripLists}</p>
+      {latLntLists.length > 0 && (
+        <div
+          style={{
+            height: '500px',
+            width: '800px',
+          }}
+        >
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: process.env.NEXT_PUBLIC_GCP_API_URL ?? '',
+            }}
+            defaultCenter={defaultLatLng}
+            defaultZoom={16}
+            onGoogleApiLoaded={handleApiLoaded}
+            onClick={setLatLng}
+          />
+        </div>
       )}
-      {roomLists.map((roomList: any) => (
-        <ul>
-          <Link href={`rooms/${roomList.id}`}>
-            <li key={roomList.id}>{roomList.id}</li>
-          </Link>
-        </ul>
-      ))}
-    </>
+    </div>
   );
 }
+
+export default Home;
