@@ -38,7 +38,8 @@ function Home() {
       })
         .then(async (response) => {
           const json = await response.json();
-          if (json.status === 'ZERO_RESULTS') return;
+          console.log('json', json);
+          if (json.status === 'ZERO_RESULTS' || json.status !== 200) return;
           json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
