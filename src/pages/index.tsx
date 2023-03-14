@@ -82,7 +82,9 @@ function Home() {
           lat: item.lat,
           lng: item.lng,
         },
-        title: item.placeName,
+        title: 'test',
+        label: item.placeName,
+        animation: google.maps.Animation.DROP,
         map,
       });
       bounds.extend(marker.position);

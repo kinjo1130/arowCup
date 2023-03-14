@@ -39,7 +39,7 @@ export default async function chatGPT(req: NextApiRequest, res: NextApiResponse)
       {
         role: 'user',
         // todo: ここにユーザーの入力を入れる
-        content: `${req.body}観光コース 地名 リスト 6個 説明なし`,
+        content: `${req.body}観光コース 地名 リスト 8個 説明なし`,
       },
     ],
     temperature: 0.9,
@@ -64,7 +64,7 @@ export default async function chatGPT(req: NextApiRequest, res: NextApiResponse)
       console.log('nodeでのレスポンス', await responseBody);
       // レスポンス結果をコンソールに出力する
       console.log(responseBody);
-      const format = responseBody.choices[0].message.content.split(/\s*[1-6]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
+      const format = responseBody.choices[0].message.content.split(/\s*[1-9]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
       console.log('format', format);
       res.status(200).json(format);
     })
