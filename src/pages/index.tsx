@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
+/* eslint-disable no-alert */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable max-len */
-// import GoogleMapReact from 'google-map-react';
 import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Header from '@/components/Header';
@@ -16,9 +17,6 @@ function Home() {
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
   const [inputText, setInputText] = useState<string>('福岡');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  // const [map, setMap] = useState(null);
-  // const [maps, setMaps] = useState(null);
-  // const [marker, setMarker] = useState(null);
 
   const defaultLatLng = {
     lat: 35.7022589,
@@ -27,13 +25,9 @@ function Home() {
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
     console.log('geoCodingが動いてる');
-    if (!tripLists) {
-      console.log('tripListsがないよ');
-    }
-    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
     tripLists.forEach(async (tripList) => {
       if (!tripList) return;
-      await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_MAP_URL}?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
         method: 'GET',
       })
         .then(async (response) => {
@@ -47,8 +41,6 @@ function Home() {
                 lng: await data.results[0].geometry.location.lng,
               };
               console.log('geoCodingList', geoCodingList);
-              // ここの処理がちゃんと動いてないな
-              // setLatLntLists((prev) => [...prev, geoCodingList]);
               setLatLntLists((prev) => [...prev, geoCodingList]);
               setIsLoading(false);
             });
@@ -151,13 +143,11 @@ function Home() {
             onClick={(e) => {
               console.log('ChatGPTのAPIを再コール');
               e.preventDefault();
-              // ここでおかしい気がする(ピンがちゃんと出ない)
               setTripLists([]);
               setLatLntLists([]);
               setTimeout(() => {
                 callChatGPT();
               }, 1000);
-              // testDisabled();
             }}
             disabled={isLoading}
             className="bg-black/70 hover:bg-black/30 text-white font-bold py-3 px-4 rounded"
@@ -171,7 +161,6 @@ function Home() {
               console.log('ChatGPTのAPIをコール');
               e.preventDefault();
               callChatGPT();
-              // testDisabled();
             }}
             disabled={isLoading}
             className="bg-black/70 hover:bg-black/30 text-white font-bold py-3.5 px-4 rounded"
@@ -180,16 +169,6 @@ function Home() {
           </button>
         )}
       </form>
-      {/* <button
-        type="button"
-        onClick={(e) => {
-          e.preventDefault();
-          console.log('APIRouteのAPIをコール');
-          callChatGPT();
-        }}
-      >
-        APIてすとコール
-      </button> */}
       <ul>
         {tripLists.map((tripList) => (
           <li key={tripList}>{tripList}</li>
@@ -210,7 +189,6 @@ function Home() {
             defaultZoom={16}
             onGoogleApiLoaded={handleApiLoaded}
             yesIWantToUseGoogleMapApiInternals
-            // onClick={setLatLng}
           />
         </div>
       )}
