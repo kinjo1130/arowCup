@@ -24,6 +24,7 @@ function Home() {
   };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
+    console.log('geoCoding');
     // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
     tripLists.forEach(async (tripList) => {
       if (!tripList) return;
@@ -40,11 +41,9 @@ function Home() {
               lng: data.results[0].geometry.location.lng,
             };
             console.log('geoCodingList', geoCodingList);
+            // ここの処理がちゃんと動いてないな
             // setLatLntLists((prev) => [...prev, geoCodingList]);
-            setLatLntLists({
-              ...latLntLists,
-              ...geoCodingList,
-            });
+            setLatLntLists((prev) => [...prev, geoCodingList]);
             console.log('latLntLists', latLntLists);
           });
         })
@@ -71,67 +70,27 @@ function Home() {
 
   const callChatGPT = async () => {
     console.log('押したよ');
-    // APIキーとエンジンIDを設定する
-    const apiKey = process.env.NEXT_PUBLIC_CHATGPT_API_KEY;
-
-    // APIエンドポイントを設定する
-    const endpoint = process.env.NEXT_PUBLIC_ENDPOINT ?? '';
-
-    // APIリクエストボディを設定する
-    const requestBody = {
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'user',
-          // todo: ここにユーザーの入力を入れる
-          content: `${inputText}観光コース 地名 リスト 6個 説明なし`,
-        },
-      ],
-      /**
-       * サンプリング操作、0.8のような高い値は出力をよりランダムにし、0.2のような低い値は出力を収束させる
-       */
-      temperature: 0.9,
-      /**
-       * 0.1 は上位 10% の確率の塊からなるトークンのみを考慮することを意味する
-       * `temperature` によるサンプリングの代替となるが併用は推奨されない
-       */
-      top_p: 1,
-      /**
-       * 各入力メッセージに対して生成するチャット補完の選択肢の数
-       */
-      n: 1,
-      /**
-       * presence penalty は少なくとも1回サンプリングされた全てのトークンに適用される1回限り加算する寄与
-       * frequency penalty は特定のトークンが既にサンプリングされた頻度に比例する寄与
-       */
-      presence_penalty: 0,
-      frequency_penalty: 0,
-    };
-
-    // APIリクエストヘッダを設定する
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    };
 
     // HTTP POSTリクエストを送信する
-    const response = await fetch(endpoint, {
+    const getRes = await fetch('http://localhost:3000/api/chatGPT', {
       method: 'POST',
-      headers,
-      body: JSON.stringify(requestBody),
+      body: JSON.stringify(inputText),
     });
+    const responseBody = await getRes.json();
+    console.log('res', responseBody);
+    await setTripLists(responseBody);
 
     // APIレスポンスを取得する
-    const responseBody = await response.json();
 
     // レスポンス結果をコンソールに出力する
-    console.log(responseBody.choices[0].message.content);
-    console.log(responseBody);
-    const format = responseBody.choices[0].message.content.split(/\s*[1-6]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
-    console.log('format', format);
-    setTripLists(format);
+    // console.log(responseBody.choices[0].message.content);
+    // console.log(responseBody);
+    // const format = responseBody.choices[0].message.content.split(/\s*[1-6]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
+    // console.log('format', format);
+    // setTripLists(format);
   };
   useEffect(() => {
+    console.log('useEffect');
     geoCoding();
   }, [tripLists]);
   return (
@@ -165,6 +124,16 @@ function Home() {
           APIコール
         </button>
       </form>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.preventDefault();
+          console.log('APIRouteのAPIをコール');
+          callChatGPT();
+        }}
+      >
+        APIてすとコール
+      </button>
       <p>{tripLists}</p>
       {latLntLists.length > 0 && (
         <div
