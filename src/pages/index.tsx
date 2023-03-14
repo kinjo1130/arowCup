@@ -53,7 +53,7 @@ function Home() {
           });
         })
         .catch((error) => {
-          alert('エラーが発生しました。');
+          alert(`エラーが発生しました。${error.message}`);
           console.log('geoCodingのerror', error);
           setIsLoading(false);
           toast.error(`エラーが発生しました。${error.message}`, {
@@ -100,7 +100,7 @@ function Home() {
       await setTripLists(responseBody);
       // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
-      alert('エラーが発生しました。');
+      alert(`エラーが発生しました。${error.message}`);
       console.log('error', error);
       setIsLoading(false);
       toast.error(`エラーが発生しました。${error.message}`, {
