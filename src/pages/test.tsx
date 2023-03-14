@@ -14,7 +14,7 @@ type LatLntLists = {
 function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
-  const [inputText, setInputText] = useState<string>('福岡');
+  const [inputText, setInputText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [map, setMap] = useState(null);
   // const [maps, setMaps] = useState(null);
@@ -23,18 +23,6 @@ function Home() {
   const defaultLatLng = {
     lat: 35.7022589,
     lng: 139.7744733,
-  };
-  const touster = (errorText: string) => {
-    toast.error(errorText, {
-      position: 'top-right',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    });
   };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
@@ -48,25 +36,40 @@ function Home() {
       await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
         method: 'GET',
       })
-        .then((response) => {
+        .then(async (response) => {
           const json = response.json();
-          json.then((data: any) => {
-            const geoCodingList = {
-              placeName: tripList,
-              lat: data.results[0].geometry.location.lat,
-              lng: data.results[0].geometry.location.lng,
-            };
-            console.log('geoCodingList', geoCodingList);
-            // ここの処理がちゃんと動いてないな
-            // setLatLntLists((prev) => [...prev, geoCodingList]);
-            setLatLntLists((prev) => [...prev, geoCodingList]);
-            setIsLoading(false);
-          });
+          console.log('json', await json);
+          if (response.ok) {
+            await json.then(async (data: any) => {
+              const geoCodingList = {
+                placeName: tripList,
+                lat: await data.results[0].geometry.location.lat,
+                lng: await data.results[0].geometry.location.lng,
+              };
+              console.log('geoCodingList', geoCodingList);
+              // ここの処理がちゃんと動いてないな
+              // setLatLntLists((prev) => [...prev, geoCodingList]);
+              setLatLntLists((prev) => [...prev, geoCodingList]);
+              setIsLoading(false);
+            });
+          } else {
+            alert(`Geocode was not successful for the following reason: ${json}`);
+          }
         })
         .catch((error) => {
+          alert(`エラーが発生しました。${error.message}`);
           console.log('geoCodingのerror', error);
           setIsLoading(false);
-          touster(`エラーが発生しました。${error.message}`);
+          toast.error(`エラーが発生しました。${error.message}`, {
+            position: 'top-right',
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'light',
+          });
         });
     });
   };
@@ -79,7 +82,8 @@ function Home() {
           lat: item.lat,
           lng: item.lng,
         },
-        title: item.placeName,
+        title: 'test',
+        label: item.placeName,
         map,
       });
       bounds.extend(marker.position);
@@ -101,9 +105,19 @@ function Home() {
       await setTripLists(responseBody);
       // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
+      alert(`エラーが発生しました。${error.message}`);
       console.log('error', error);
       setIsLoading(false);
-      touster(`エラーが発生しました。${error.message}`);
+      toast.error(`エラーが発生しました。${error.message}`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     }
   };
   useEffect(() => {
@@ -122,7 +136,8 @@ function Home() {
         <input
           type="text"
           value={inputText}
-          className="border-2 border-gray-300"
+          className="border-2 border-gray-300 px-5 py-3"
+          placeholder="例: 福岡"
           onChange={(e) => {
             e.preventDefault();
             setInputText(e.target.value);
@@ -145,7 +160,7 @@ function Home() {
               // testDisabled();
             }}
             disabled={isLoading}
-            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-3 px-4 rounded"
           >
             {isLoading ? 'Loading...' : 'ルートを再生成する'}
           </button>
@@ -159,7 +174,7 @@ function Home() {
               // testDisabled();
             }}
             disabled={isLoading}
-            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-3.5 px-4 rounded"
           >
             {isLoading ? 'Loading...' : 'ルートを生成する'}
           </button>
@@ -180,7 +195,7 @@ function Home() {
           <li key={tripList}>{tripList}</li>
         ))}
       </ul>
-      {latLntLists.length >= 6 && (
+      {latLntLists.length > 4 && (
         <div
           style={{
             height: '500px',
