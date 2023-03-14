@@ -39,7 +39,7 @@ export default async function chatGPT(req: NextApiRequest, res: NextApiResponse)
       {
         role: 'user',
         // todo: ここにユーザーの入力を入れる
-        content: `${req.body}観光コース 地名 リスト 8個 説明なし`,
+        content: `${req.body}観光コース 地名 リスト 7個 説明なし`,
       },
     ],
     temperature: 0.9,
