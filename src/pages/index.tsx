@@ -180,7 +180,7 @@ function Home() {
           <li key={tripList}>{tripList}</li>
         ))}
       </ul>
-      {latLntLists.length >= 6 && (
+      {latLntLists.length >= 4 && (
         <div
           style={{
             height: '500px',
