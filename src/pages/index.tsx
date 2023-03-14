@@ -111,6 +111,7 @@ function Home() {
     console.log('useEffect');
     geoCoding();
     console.log('latLntLists', latLntLists);
+    console.log('tripLists', tripLists);
   }, [tripLists]);
   // const testDisabled = () => {
   //   setIsLoading(true);
@@ -125,7 +126,6 @@ function Home() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          callChatGPT();
           // testDisabled();
         }}
       >
@@ -140,19 +140,37 @@ function Home() {
           }}
           required
         />
-        <button
-          type="submit"
-          onSubmit={(e) => {
-            console.log('ChatGPTのAPIをコール');
-            e.preventDefault();
-            callChatGPT();
-            // testDisabled();
-          }}
-          disabled={isLoading}
-          className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
-        >
-          {isLoading ? 'Loading...' : 'ルートを生成する'}
-        </button>
+        {latLntLists.length > 0 ? (
+          <button
+            type="button"
+            onClick={(e) => {
+              console.log('ChatGPTのAPIを再コール');
+              e.preventDefault();
+              setLatLntLists([]);
+              setTripLists([]);
+              callChatGPT();
+              // testDisabled();
+            }}
+            disabled={isLoading}
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+          >
+            {isLoading ? 'Loading...' : 'ルートを再生成する'}
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={(e) => {
+              console.log('ChatGPTのAPIをコール');
+              e.preventDefault();
+              callChatGPT();
+              // testDisabled();
+            }}
+            disabled={isLoading}
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+          >
+            {isLoading ? 'Loading...' : 'ルートを生成する'}
+          </button>
+        )}
       </form>
       {/* <button
         type="button"
