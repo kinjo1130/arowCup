@@ -14,7 +14,7 @@ type LatLntLists = {
 function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
-  const [inputText, setInputText] = useState<string>('福岡');
+  const [inputText, setInputText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [map, setMap] = useState(null);
   // const [maps, setMaps] = useState(null);
@@ -131,7 +131,8 @@ function Home() {
         <input
           type="text"
           value={inputText}
-          className="border-2 border-gray-300"
+          className="border-2 border-gray-300 px-5 py-3"
+          placeholder="例: 福岡"
           onChange={(e) => {
             e.preventDefault();
             setInputText(e.target.value);
@@ -154,7 +155,7 @@ function Home() {
               // testDisabled();
             }}
             disabled={isLoading}
-            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-3 px-4 rounded"
           >
             {isLoading ? 'Loading...' : 'ルートを再生成する'}
           </button>
@@ -168,7 +169,7 @@ function Home() {
               // testDisabled();
             }}
             disabled={isLoading}
-            className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
+            className="bg-black/70 hover:bg-black/30 text-white font-bold py-3.5 px-4 rounded"
           >
             {isLoading ? 'Loading...' : 'ルートを生成する'}
           </button>
