@@ -39,7 +39,6 @@ function Home() {
         .then(async (response) => {
           const json = await response.json();
           console.log('json', json);
-          if (json.status === 'ZERO_RESULTS' || json.status !== 200) return;
           json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
@@ -54,6 +53,7 @@ function Home() {
           });
         })
         .catch((error) => {
+          alert('エラーが発生しました。');
           console.log('geoCodingのerror', error);
           setIsLoading(false);
           toast.error(`エラーが発生しました。${error.message}`, {
@@ -100,6 +100,7 @@ function Home() {
       await setTripLists(responseBody);
       // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
+      alert('エラーが発生しました。');
       console.log('error', error);
       setIsLoading(false);
       toast.error(`エラーが発生しました。${error.message}`, {
