@@ -38,11 +38,11 @@ function Home() {
   };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
-    console.log('geoCoding');
-    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
+    console.log('geoCodingが動いてる');
     if (!tripLists) {
       console.log('tripListsがないよ');
     }
+    // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
     tripLists.forEach(async (tripList) => {
       if (!tripList) return;
       await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
@@ -50,8 +50,7 @@ function Home() {
       })
         .then((response) => {
           const json = response.json();
-          json.then((data) => {
-            console.log('data', data);
+          json.then((data: any) => {
             const geoCodingList = {
               placeName: tripList,
               lat: data.results[0].geometry.location.lat,
@@ -98,9 +97,9 @@ function Home() {
         body: JSON.stringify(inputText),
       });
       const responseBody = await getRes.json();
-      console.log('res', responseBody);
+      console.log('APIからのres', responseBody);
       await setTripLists(responseBody);
-      await geoCoding();
+      // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);
@@ -110,16 +109,7 @@ function Home() {
   useEffect(() => {
     console.log('useEffect');
     geoCoding();
-    console.log('latLntLists', latLntLists);
-    console.log('tripLists', tripLists);
   }, [tripLists]);
-  // const testDisabled = () => {
-  //   setIsLoading(true);
-  //   console.log('testDisabled');
-  //   setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 8000);
-  // };
   return (
     <div>
       <Header />
@@ -146,9 +136,12 @@ function Home() {
             onClick={(e) => {
               console.log('ChatGPTのAPIを再コール');
               e.preventDefault();
-              setLatLntLists([]);
+              // ここでおかしい気がする(ピンがちゃんと出ない)
               setTripLists([]);
-              callChatGPT();
+              setLatLntLists([]);
+              setTimeout(() => {
+                callChatGPT();
+              }, 1000);
               // testDisabled();
             }}
             disabled={isLoading}
@@ -182,8 +175,12 @@ function Home() {
       >
         APIてすとコール
       </button> */}
-      <p>{tripLists}</p>
-      {latLntLists.length > 0 && (
+      <ul>
+        {tripLists.map((tripList) => (
+          <li key={tripList}>{tripList}</li>
+        ))}
+      </ul>
+      {latLntLists.length >= 6 && (
         <div
           style={{
             height: '500px',
@@ -197,6 +194,7 @@ function Home() {
             defaultCenter={defaultLatLng}
             defaultZoom={16}
             onGoogleApiLoaded={handleApiLoaded}
+            yesIWantToUseGoogleMapApiInternals
             // onClick={setLatLng}
           />
         </div>
