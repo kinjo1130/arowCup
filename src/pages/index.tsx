@@ -97,6 +97,13 @@ function Home() {
     geoCoding();
     console.log('latLntLists', latLntLists);
   }, [tripLists]);
+  const testDisabled = () => {
+    setIsLoading(true);
+    console.log('testDisabled');
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 8000);
+  };
   return (
     <div>
       <Header />
@@ -104,6 +111,7 @@ function Home() {
         onSubmit={(e) => {
           e.preventDefault();
           callChatGPT();
+          // testDisabled();
         }}
       >
         <input
@@ -123,8 +131,10 @@ function Home() {
             console.log('ChatGPTのAPIをコール');
             e.preventDefault();
             callChatGPT();
+            // testDisabled();
           }}
-          className="bg-black/30 hover:bg-black/50 text-white font-bold py-2 px-4 rounded"
+          disabled={isLoading}
+          className="bg-black/70 hover:bg-black/30 text-white font-bold py-2 px-4 rounded"
         >
           {isLoading ? 'Loading...' : 'ルートを生成する'}
         </button>
