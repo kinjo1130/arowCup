@@ -127,7 +127,7 @@ function Home() {
     }, 1000);
   };
   return (
-    <div className="">
+    <div>
       <SEO pageTitle={inputText} pageDescription="AIがおすすめの観光スポットをレコメンドします" />
       <Header />
       <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center mt-10">
