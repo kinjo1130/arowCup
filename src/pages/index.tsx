@@ -127,6 +127,7 @@ function Home() {
   useEffect(() => {
     geoCoding();
   }, [tripLists]);
+  randomPlaceholder();
   // setInterval(() => {
   //   console.log('切り替わるよ');
   //   randomPlaceholder();
