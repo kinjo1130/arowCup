@@ -1,10 +1,21 @@
 /* eslint-disable quote-props */
 /* eslint-disable max-len */
 import * as functions from 'firebase-functions';
+const express = require('express');
+const rate = require('express-rate-limit');
 
 // const cors = require('cors')({
 //   origin: true,
 // });
+const app = express();
+const limit = rate({
+  // 50sで50回まで
+  windowMs: 1 * 50 * 1000,
+  max: 50,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use(limit);
 
 export const chatGPT = functions.region('asia-northeast2').https.onRequest(async (req, res) => {
   if (req.method !== 'POST') return;
