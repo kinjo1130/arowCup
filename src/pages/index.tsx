@@ -20,7 +20,7 @@ function Home() {
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
   const [inputText, setInputText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [placeHolderText, setPlaceHolderText] = useState<string>();
+  // const [placeHolderText, setPlaceHolderText] = useState<string>();
   const toasterShowTime = 2000;
   const defaultLatLng = {
     lat: 35.7022589,
@@ -50,12 +50,12 @@ function Home() {
   //     theme: 'light',
   //   });
   // };
-  const randomPlaceholder = () => {
-    // todo: ここもAIに生成させたい
-    const placeholderList = ['福岡', 'アイルランド', 'アメリカ', '滋賀県', '暑い地域', '日本', '香川', '愛媛'];
-    const randomIndex = Math.floor(Math.random() * placeholderList.length);
-    setPlaceHolderText(placeholderList[randomIndex]);
-  };
+  // const randomPlaceholder = () => {
+  //   // todo: ここもAIに生成させたい
+  //   const placeholderList = ['福岡', 'アイルランド', 'アメリカ', '滋賀県', '暑い地域', '日本', '香川', '愛媛'];
+  //   const randomIndex = Math.floor(Math.random() * placeholderList.length);
+  //   setPlaceHolderText(placeholderList[randomIndex]);
+  // };
 
   const geoCoding = async () => {
     tripLists.forEach(async (tripList) => {
@@ -127,7 +127,7 @@ function Home() {
   useEffect(() => {
     geoCoding();
   }, [tripLists]);
-  randomPlaceholder();
+  // randomPlaceholder();
   // setInterval(() => {
   //   console.log('切り替わるよ');
   //   randomPlaceholder();
@@ -147,7 +147,7 @@ function Home() {
           type="text"
           value={inputText}
           className="border-2 border-gray-300 px-5 py-3"
-          placeholder={`例: ${placeHolderText ?? '福岡'}`}
+          placeholder={"例:  '福岡"}
           onChange={(e) => {
             e.preventDefault();
             setInputText(e.target.value);
