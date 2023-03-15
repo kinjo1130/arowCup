@@ -6,6 +6,9 @@ import React, { useEffect, useState } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Header from '@/components/Header';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import SEO from '@/components/SEO';
+import Footer from '@/components/Footer';
 
 type LatLntLists = {
   placeName: string;
@@ -15,42 +18,56 @@ type LatLntLists = {
 function Home() {
   const [tripLists, setTripLists] = useState<string[]>([]);
   const [latLntLists, setLatLntLists] = useState<LatLntLists>([]);
-  const [inputText, setInputText] = useState<string>('福岡');
+  const [inputText, setInputText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
+  const toasterShowTime = 2000;
   const defaultLatLng = {
     lat: 35.7022589,
     lng: 139.7744733,
   };
-  // todo: 名所から座標を取得する
+  const errorToaster = (errorMsg: string) => {
+    toast.error(`エラーが発生しました。${errorMsg}`, {
+      position: 'top-right',
+      autoClose: toasterShowTime,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
+  const successToaster = (message: string) => {
+    toast.success(message, {
+      position: 'top-right',
+      autoClose: toasterShowTime,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
+  };
   const geoCoding = async () => {
-    console.log('geoCodingが動いてる');
     tripLists.forEach(async (tripList) => {
-      if (!tripList) return;
       await fetch(`${process.env.NEXT_PUBLIC_MAP_URL}?address=${tripList}&key=${process.env.NEXT_PUBLIC_GCP_API_URL}`, {
         method: 'GET',
       })
         .then(async (response) => {
           const json = response.json();
-          console.log('json', await json);
-          if (response.ok) {
-            await json.then(async (data: any) => {
-              const geoCodingList = {
-                placeName: tripList,
-                lat: await data.results[0].geometry.location.lat,
-                lng: await data.results[0].geometry.location.lng,
-              };
-              console.log('geoCodingList', geoCodingList);
-              setLatLntLists((prev) => [...prev, geoCodingList]);
-              setIsLoading(false);
-            });
-          } else {
-            alert(`Geocode was not successful for the following reason: ${json}`);
-          }
+          await json.then(async (data: any) => {
+            const geoCodingList = {
+              placeName: tripList,
+              lat: await data.results[0].geometry.location.lat,
+              lng: await data.results[0].geometry.location.lng,
+            };
+            console.log('geoCodingList', geoCodingList);
+            setLatLntLists((prev) => [...prev, geoCodingList]);
+            setIsLoading(false);
+          });
         })
         .catch((error) => {
-          alert(`エラーが発生しました。${error.message}`);
-          console.log('geoCodingのerror', error);
           setIsLoading(false);
           toast.error(`エラーが発生しました。${error.message}`, {
             position: 'top-right',
@@ -85,7 +102,6 @@ function Home() {
   const callChatGPT = async () => {
     setIsLoading(true);
     console.log('押したよ');
-    // HTTP POSTリクエストを送信する
     try {
       const getRes = await fetch(process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT as string, {
         method: 'POST',
@@ -94,29 +110,18 @@ function Home() {
       const responseBody = await getRes.json();
       console.log('APIからのres', responseBody);
       await setTripLists(responseBody);
-      // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
-      alert(`エラーが発生しました。${error.message}`);
       console.log('error', error);
       setIsLoading(false);
-      toast.error(`エラーが発生しました。${error.message}`, {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
+      errorToaster(error.message);
     }
   };
   useEffect(() => {
-    console.log('useEffect');
     geoCoding();
   }, [tripLists]);
   return (
-    <div>
+    <div className="">
+      <SEO pageTitle={inputText} pageDescription="AIがおすすめの観光スポットをレコメンドします" />
       <Header />
       <form
         onSubmit={(e) => {
@@ -169,6 +174,16 @@ function Home() {
           </button>
         )}
       </form>
+      {/* <button
+        type="button"
+        onClick={() => {
+          console.log('トースターテスト');
+          // errorToaster('エラーが発生しました。');
+          successToaster('成功！');
+        }}
+      >
+        テスト
+      </button> */}
       <ul>
         {tripLists.map((tripList) => (
           <li key={tripList}>{tripList}</li>
@@ -192,6 +207,9 @@ function Home() {
           />
         </div>
       )}
+      <div className="absolute bottom-0 w-full">
+        <Footer />
+      </div>
     </div>
   );
 }
