@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SEO from '@/components/SEO';
 import Footer from '@/components/Footer';
+import Spinner from '@/components/spinner';
 
 type LatLntLists = {
   placeName: string;
@@ -171,34 +172,39 @@ function Home() {
         )}
       </form>
       {latLntLists.length > 4 && (
-        <div className="flex flex-col justify-center mx-auto mt-10">
-          <h3 className="text-base font-bold text-center">
-            {inputText}
-            のおすすめの場所
-          </h3>
-          <ul className="mx-auto grid mt-4 mb-10 w-[90%] md:grid-cols-2 gap-3 ">
-            {tripLists.map((tripList) => (
-              <li key={tripList} className="py-3 px-2 mx-auto border-2 rounded border-b-gray-300 w-full text-center">
-                {tripList}
-              </li>
-            ))}
-          </ul>
+        <div>
+          <div className="flex flex-col justify-center mx-auto mt-10">
+            <h3 className="text-base font-bold text-center">
+              {inputText}
+              のおすすめの場所
+            </h3>
+            <ul className="mx-auto grid mt-4 mb-10 w-[90%] md:grid-cols-2 gap-3 ">
+              {tripLists.map((tripList) => (
+                <li key={tripList} className="py-3 px-2 mx-auto border-2 rounded border-b-gray-300 w-full text-center">
+                  {tripList}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="w-full h-[500px] mb-10">
+            <GoogleMapReact
+              bootstrapURLKeys={{
+                key: process.env.NEXT_PUBLIC_GCP_API_URL ?? '',
+              }}
+              defaultCenter={defaultLatLng}
+              defaultZoom={16}
+              onGoogleApiLoaded={handleApiLoaded}
+              yesIWantToUseGoogleMapApiInternals
+            />
+          </div>
+          <Footer />
         </div>
       )}
-      {latLntLists.length > 4 && (
-        <div className="w-full h-[500px] mb-10">
-          <GoogleMapReact
-            bootstrapURLKeys={{
-              key: process.env.NEXT_PUBLIC_GCP_API_URL ?? '',
-            }}
-            defaultCenter={defaultLatLng}
-            defaultZoom={16}
-            onGoogleApiLoaded={handleApiLoaded}
-            yesIWantToUseGoogleMapApiInternals
-          />
+      {isLoading === true && latLntLists.length < 4 && (
+        <div className="mt-20">
+          <Spinner />
         </div>
       )}
-      {latLntLists.length > 4 && (<Footer />)}
     </div>
   );
 }
