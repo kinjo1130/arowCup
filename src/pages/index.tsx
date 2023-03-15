@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import SEO from '@/components/SEO';
 import Footer from '@/components/Footer';
-import Spinner from '@/components/spinner';
+import Spinner from '@/components/Spinner';
 
 type LatLntLists = {
   placeName: string;
@@ -203,6 +203,11 @@ function Home() {
       {isLoading === true && latLntLists.length < 4 && (
         <div className="mt-20">
           <Spinner />
+        </div>
+      )}
+      {latLntLists.length < 4 && (
+        <div className="absolute bottom-0 w-full">
+          <Footer />
         </div>
       )}
     </div>

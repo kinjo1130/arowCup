@@ -12,7 +12,6 @@ export const chatGPT = functions.region('asia-northeast2').https.onRequest(async
   functions.logger.info('firebase functionsに届いたよ!', {
     structuredData: true,
   });
-  console.log('inputText', req.body);
   const apiKey = process.env.CHATGPT_API_KEY;
 
   // APIエンドポイントを設定する
@@ -38,20 +37,15 @@ export const chatGPT = functions.region('asia-northeast2').https.onRequest(async
     'Content-Type': 'application/json',
     Authorization: `Bearer ${apiKey}`,
   };
-  console.log('apiRouteに届いた');
   await fetch(endpoint, {
     method: 'POST',
     headers,
     body: JSON.stringify(requestBody),
   })
     .then(async (response) => {
-      console.log('response', response);
       const responseBody = await response.json();
-      console.log('nodeでのレスポンス', await responseBody);
       // レスポンス結果をコンソールに出力する
-      console.log(responseBody);
       const format = responseBody.choices[0].message.content.split(/\s*[1-9]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
-      console.log('format', format);
       res.status(200).json(format);
     })
     .catch((err) => {

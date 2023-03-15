@@ -26,9 +26,8 @@ function Home() {
   };
   // todo: 名所から座標を取得する
   const geoCoding = async () => {
-    console.log('geoCodingが動いてる');
     if (!tripLists) {
-      console.log('tripListsがないよ');
+      console.log('tripListsが空です');
     }
     // const damey = ['', '天神 ', '博多 ', '中洲 ', '福岡城跡 ', '福岡タワー ', '聖福寺 '];
     tripLists.forEach(async (tripList) => {
@@ -38,7 +37,6 @@ function Home() {
       })
         .then(async (response) => {
           const json = response.json();
-          console.log('json', await json);
           if (response.ok) {
             await json.then(async (data: any) => {
               const geoCodingList = {
@@ -46,7 +44,6 @@ function Home() {
                 lat: await data.results[0].geometry.location.lat,
                 lng: await data.results[0].geometry.location.lng,
               };
-              console.log('geoCodingList', geoCodingList);
               // ここの処理がちゃんと動いてないな
               // setLatLntLists((prev) => [...prev, geoCodingList]);
               setLatLntLists((prev) => [...prev, geoCodingList]);
@@ -58,7 +55,6 @@ function Home() {
         })
         .catch((error) => {
           alert(`エラーが発生しました。${error.message}`);
-          console.log('geoCodingのerror', error);
           setIsLoading(false);
           toast.error(`エラーが発生しました。${error.message}`, {
             position: 'top-right',
@@ -93,7 +89,6 @@ function Home() {
 
   const callChatGPT = async () => {
     setIsLoading(true);
-    console.log('押したよ');
     // HTTP POSTリクエストを送信する
     try {
       const getRes = await fetch('http://127.0.0.1:5001/nuxt-navi/us-central1/chatGPT', {
@@ -101,12 +96,10 @@ function Home() {
         body: JSON.stringify(inputText),
       });
       const responseBody = await getRes.json();
-      console.log('APIからのres', responseBody);
       await setTripLists(responseBody);
       // ここで関数を回すと、tripListsが空になってしまう
     } catch (error: any) {
       alert(`エラーが発生しました。${error.message}`);
-      console.log('error', error);
       setIsLoading(false);
       toast.error(`エラーが発生しました。${error.message}`, {
         position: 'top-right',
@@ -121,7 +114,6 @@ function Home() {
     }
   };
   useEffect(() => {
-    console.log('useEffect');
     geoCoding();
   }, [tripLists]);
   return (
@@ -141,7 +133,6 @@ function Home() {
           onChange={(e) => {
             e.preventDefault();
             setInputText(e.target.value);
-            console.log('inputText', inputText);
           }}
           required
         />
@@ -149,7 +140,6 @@ function Home() {
           <button
             type="button"
             onClick={(e) => {
-              console.log('ChatGPTのAPIを再コール');
               e.preventDefault();
               // ここでおかしい気がする(ピンがちゃんと出ない)
               setTripLists([]);
@@ -168,7 +158,6 @@ function Home() {
           <button
             type="button"
             onClick={(e) => {
-              console.log('ChatGPTのAPIをコール');
               e.preventDefault();
               callChatGPT();
               // testDisabled();
@@ -184,7 +173,6 @@ function Home() {
         type="button"
         onClick={(e) => {
           e.preventDefault();
-          console.log('APIRouteのAPIをコール');
           callChatGPT();
         }}
       >
