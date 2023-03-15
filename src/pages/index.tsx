@@ -78,7 +78,6 @@ function Home() {
         })
         .catch((error) => {
           setIsLoading(false);
-          // errorToaster(error.message);
           console.log('error', error);
         });
     });
@@ -102,17 +101,14 @@ function Home() {
 
   const callChatGPT = async () => {
     setIsLoading(true);
-    console.log('押したよ');
     try {
       const getRes = await fetch(process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT as string, {
         method: 'POST',
         body: JSON.stringify(inputText),
       });
       const responseBody = await getRes.json();
-      console.log('APIからのres', responseBody);
-      const filteredTripLists = responseBody.filter((tripList: any) => tripList !== '');
-      console.log('filteredTripLists', filteredTripLists);
-      await setTripLists(filteredTripLists);
+      const filteredEmptyTripLists = responseBody.filter((tripList: any) => tripList !== '');
+      await setTripLists(filteredEmptyTripLists);
     } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);
