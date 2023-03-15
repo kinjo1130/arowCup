@@ -77,16 +77,8 @@ function Home() {
         })
         .catch((error) => {
           setIsLoading(false);
-          toast.error(`エラーが発生しました。${error.message}`, {
-            position: 'top-right',
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'light',
-          });
+          // errorToaster(error.message);
+          console.log('error', error);
         });
     });
   };
@@ -117,7 +109,9 @@ function Home() {
       });
       const responseBody = await getRes.json();
       console.log('APIからのres', responseBody);
-      await setTripLists(responseBody);
+      const filteredTripLists = responseBody.filter((tripList: any) => tripList !== '');
+      console.log('filteredTripLists', filteredTripLists);
+      await setTripLists(filteredTripLists);
     } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);
@@ -127,27 +121,24 @@ function Home() {
   useEffect(() => {
     geoCoding();
   }, [tripLists]);
-  // randomPlaceholder();
-  // setInterval(() => {
-  //   console.log('切り替わるよ');
-  //   randomPlaceholder();
-  // }, 5000);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setTripLists([]);
+    setLatLntLists([]);
+    setTimeout(() => {
+      callChatGPT();
+    }, 1000);
+  };
   return (
     <div className="">
       <SEO pageTitle={inputText} pageDescription="AIがおすすめの観光スポットをレコメンドします" />
       <Header />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          // testDisabled();
-        }}
-        className="flex flex-col items-center justify-center mt-10"
-      >
+      <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center mt-10">
         <input
           type="text"
           value={inputText}
-          className="border-2 border-gray-300 px-5 py-3"
-          placeholder={"例:  '福岡"}
+          className="border-2 border-gray-300 px-5 py-3 mb-4"
+          placeholder="例:  福岡"
           onChange={(e) => {
             e.preventDefault();
             setInputText(e.target.value);
@@ -157,15 +148,9 @@ function Home() {
         />
         {latLntLists.length > 0 ? (
           <button
-            type="button"
-            onClick={(e) => {
-              console.log('ChatGPTのAPIを再コール');
-              e.preventDefault();
-              setTripLists([]);
-              setLatLntLists([]);
-              setTimeout(() => {
-                callChatGPT();
-              }, 1000);
+            type="submit"
+            onSubmit={(e) => {
+              handleSubmit(e);
             }}
             disabled={isLoading}
             className="bg-black/70 hover:bg-black/30 text-white font-bold py-3 px-4 rounded"
@@ -174,11 +159,9 @@ function Home() {
           </button>
         ) : (
           <button
-            type="button"
-            onClick={(e) => {
-              console.log('ChatGPTのAPIをコール');
-              e.preventDefault();
-              callChatGPT();
+            type="submit"
+            onSubmit={(e) => {
+              handleSubmit(e);
             }}
             disabled={isLoading}
             className="bg-black/70 hover:bg-black/30 text-white font-bold py-3.5 px-4 rounded"
@@ -187,28 +170,23 @@ function Home() {
           </button>
         )}
       </form>
-      {/* <button
-        type="button"
-        onClick={() => {
-          console.log('トースターテスト');
-          // errorToaster('エラーが発生しました。');
-          successToaster('成功！');
-        }}
-      >
-        テスト
-      </button> */}
-      <ul>
-        {tripLists.map((tripList) => (
-          <li key={tripList}>{tripList}</li>
-        ))}
-      </ul>
       {latLntLists.length > 4 && (
-        <div
-          style={{
-            height: '500px',
-            width: '100%',
-          }}
-        >
+        <div className="flex flex-col justify-center mx-auto mt-10">
+          <h3 className="text-base font-bold text-center">
+            {inputText}
+            のおすすめの場所
+          </h3>
+          <ul className="mx-auto grid mt-4 mb-10 w-[90%] md:grid-cols-2 gap-3 ">
+            {tripLists.map((tripList) => (
+              <li key={tripList} className="py-3 px-2 mx-auto border-2 rounded border-b-gray-300 w-full text-center">
+                {tripList}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {latLntLists.length > 4 && (
+        <div className="w-full h-[500px] mb-10">
           <GoogleMapReact
             bootstrapURLKeys={{
               key: process.env.NEXT_PUBLIC_GCP_API_URL ?? '',
@@ -220,9 +198,7 @@ function Home() {
           />
         </div>
       )}
-      <div className="absolute bottom-0 w-full">
-        <Footer />
-      </div>
+      {latLntLists.length > 4 && (<Footer />)}
     </div>
   );
 }
