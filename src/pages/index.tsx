@@ -108,6 +108,12 @@ function Home() {
       });
       const responseBody = await getRes.json();
       const filteredEmptyTripLists = responseBody.filter((tripList: any) => tripList !== '');
+      console.log('filteredEmptyTripLists', filteredEmptyTripLists);
+      if (filteredEmptyTripLists.length < 6) {
+        errorToaster('該当するスポットがありませんでした');
+        setIsLoading(false);
+        return;
+      }
       await setTripLists(filteredEmptyTripLists);
     } catch (error: any) {
       console.log('error', error);
