@@ -127,10 +127,10 @@ function Home() {
   useEffect(() => {
     geoCoding();
   }, [tripLists]);
-  setInterval(() => {
-    console.log('切り替わるよ');
-    randomPlaceholder();
-  }, 5000);
+  // setInterval(() => {
+  //   console.log('切り替わるよ');
+  //   randomPlaceholder();
+  // }, 5000);
   return (
     <div className="">
       <SEO pageTitle={inputText} pageDescription="AIがおすすめの観光スポットをレコメンドします" />
