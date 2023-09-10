@@ -1,0 +1,174 @@
+[debug] [2023-09-10T12:28:20.527Z] ----------------------------------------------------------------------
+[debug] [2023-09-10T12:28:20.528Z] Command:       /Users/kinjyoshotaro/.volta/tools/image/node/18.15.0/bin/node /Users/kinjyoshotaro/.volta/tools/image/packages/firebase-tools/bin/firebase emulators:start --only functions
+[debug] [2023-09-10T12:28:20.528Z] CLI Version:   12.3.1
+[debug] [2023-09-10T12:28:20.528Z] Platform:      darwin
+[debug] [2023-09-10T12:28:20.528Z] Node Version:  v18.15.0
+[debug] [2023-09-10T12:28:20.529Z] Time:          Sun Sep 10 2023 21:28:20 GMT+0900 (Japan Standard Time)
+[debug] [2023-09-10T12:28:20.529Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-09-10T12:28:20.601Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-09-10T12:28:20.602Z] > authorizing via signed-in user (abcshotaro616@gmail.com)
+[info] i  emulators: Starting emulators: functions {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: functions"}}
+[debug] [2023-09-10T12:28:21.007Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-09-10T12:28:21.007Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[debug] [2023-09-10T12:28:21.015Z] [hub] writing locator at /var/folders/hn/sdp40p7s3q371967mz0k7jf80000gn/T/hub-nuxt-navi.json
+[debug] [2023-09-10T12:28:21.276Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-09-10T12:28:21.276Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-09-10T12:28:21.276Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: auth, firestore, database, hosting, pubsub, storage {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mauth, firestore, database, hosting, pubsub, storage\u001b[22m"}}
+[debug] [2023-09-10T12:28:21.279Z] defaultcredentials: writing to file /Users/kinjyoshotaro/.config/firebase/abcshotaro616_gmail_com_application_default_credentials.json
+[debug] [2023-09-10T12:28:21.284Z] Setting GAC to /Users/kinjyoshotaro/.config/firebase/abcshotaro616_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/kinjyoshotaro/.config/firebase/abcshotaro616_gmail_com_application_default_credentials.json"}}
+[debug] [2023-09-10T12:28:21.286Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nuxt-navi/adminSdkConfig [none]
+[debug] [2023-09-10T12:28:21.807Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nuxt-navi/adminSdkConfig 200
+[debug] [2023-09-10T12:28:21.807Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nuxt-navi/adminSdkConfig {"projectId":"nuxt-navi","storageBucket":"nuxt-navi.appspot.com","locationId":"asia-southeast2"}
+[debug] [2023-09-10T12:28:21.824Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-09-10T12:28:21.824Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-09-10T12:28:21.824Z] Starting Emulator UI with command {"binary":"node","args":["/Users/kinjyoshotaro/.cache/firebase/emulators/ui-v1.11.6/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/kinjyoshotaro/.cache/firebase/emulators/ui-v1.11.6/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-09-10T12:28:21.899Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-09-10T12:28:21.900Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions\" for Cloud Functions..."}}
+[debug] [2023-09-10T12:28:22.084Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2023-09-10T12:28:22.683Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-rate-limit": "^6.7.0",
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.0.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2023-09-10T12:28:22.683Z] Building nodejs source
+[debug] [2023-09-10T12:28:22.684Z] Failed to find version of module node: reached end of search path /Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules
+[info] ✔  functions: Using node@18 from host. 
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-09-10T12:28:22.686Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-09-10T12:28:22.689Z] Found firebase-functions binary at '/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-09-10T12:28:22.782Z] Serving at port 8161
+
+[debug] [2023-09-10T12:28:22.885Z] Got response from /__/functions.yaml {"endpoints":{"chatGPT":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"region":["asia-northeast2"],"httpsTrigger":{},"entryPoint":"chatGPT"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-09-10T12:28:22.890Z] shutdown requested via /__/quitquitquit
+
+[info] ✔  functions: Loaded functions definitions from source: chatGPT. {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: chatGPT."}}
+[info] ✔  functions[asia-northeast2-chatGPT]: http function initialized (http://127.0.0.1:5001/nuxt-navi/asia-northeast2/chatGPT). {"metadata":{"emulator":{"name":"functions"},"message":"\u001b[1mhttp\u001b[22m function initialized (http://127.0.0.1:5001/nuxt-navi/asia-northeast2/chatGPT)."}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌───────────┬────────────────┬─────────────────────────────────┐
+│ Emulator  │ Host:Port      │ View in Emulator UI             │
+├───────────┼────────────────┼─────────────────────────────────┤
+│ Functions │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+└───────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-09-10T12:28:29.909Z] [work-queue] {"queuedWork":["/nuxt-navi/asia-northeast2/chatGPT-2023-09-10T12:28:29.908Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-09-10T12:28:29.910Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/nuxt-navi/asia-northeast2/chatGPT-2023-09-10T12:28:29.908Z"],"workRunningCount":1}
+[debug] [2023-09-10T12:28:29.911Z] Accepted request POST /nuxt-navi/asia-northeast2/chatGPT --> asia-northeast2-chatGPT
+[debug] [2023-09-10T12:28:29.924Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-09-10T12:28:29.925Z] [functions] Got req.url=/nuxt-navi/asia-northeast2/chatGPT, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/nuxt-navi/asia-northeast2/chatGPT, mapping to path=/"}}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2023-09-10T12:28:29.933Z] [worker-pool] addWorker(asia-northeast2-chatGPT) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] addWorker(asia-northeast2-chatGPT)"}}
+[debug] [2023-09-10T12:28:29.934Z] [worker-pool] Adding worker with key asia-northeast2-chatGPT, total=1 {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Adding worker with key asia-northeast2-chatGPT, total=1"}}
+[debug] [2023-09-10T12:28:30.627Z] [runtime-status] [34981] Resolved module firebase-admin {"declared":true,"installed":true,"version":"11.5.0","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"11.5.0\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.628Z] [runtime-status] [34981] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.628Z] [runtime-status] [34981] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Outgoing network have been stubbed. [{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"http\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"https\",\"status\":\"mocked\"},{\"name\":\"net\",\"status\":\"mocked\"}]"}}
+[debug] [2023-09-10T12:28:30.628Z] [runtime-status] [34981] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.705Z] [runtime-status] [34981] Checked functions.config() {"config":{}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Checked functions.config() {\"config\":{}}"}}
+[debug] [2023-09-10T12:28:30.705Z] [runtime-status] [34981] firebase-functions has been stubbed. {"functionsResolution":{"declared":true,"installed":true,"version":"4.2.1","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] firebase-functions has been stubbed. {\"functionsResolution\":{\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js\"}}"}}
+[debug] [2023-09-10T12:28:30.706Z] [runtime-status] [34981] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.706Z] [runtime-status] [34981] Resolved module firebase-admin {"declared":true,"installed":true,"version":"11.5.0","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-admin {\"declared\":true,\"installed\":true,\"version\":\"11.5.0\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.708Z] [runtime-status] [34981] Resolved module firebase-functions {"declared":true,"installed":true,"version":"4.2.1","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Resolved module firebase-functions {\"declared\":true,\"installed\":true,\"version\":\"4.2.1\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-functions/lib/v1/index.js\"}"}}
+[debug] [2023-09-10T12:28:30.708Z] [runtime-status] [34981] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"11.5.0","resolution":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js"}} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] firebase-admin has been stubbed. {\"adminResolution\":{\"declared\":true,\"installed\":true,\"version\":\"11.5.0\",\"resolution\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions/node_modules/firebase-admin/lib/index.js\"}}"}}
+[debug] [2023-09-10T12:28:30.747Z] [runtime-status] [34981] Functions runtime initialized. {"cwd":"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions","node_version":"18.15.0"} {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Functions runtime initialized. {\"cwd\":\"/Users/kinjyoshotaro/dev/dev-private/hackthon/arowCup/functions\",\"node_version\":\"18.15.0\"}"}}
+[debug] [2023-09-10T12:28:30.747Z] [runtime-status] [34981] Listening to port: /var/folders/hn/sdp40p7s3q371967mz0k7jf80000gn/T/fire_emu_ad17c8aa889f3745.sock {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[runtime-status] [34981] Listening to port: /var/folders/hn/sdp40p7s3q371967mz0k7jf80000gn/T/fire_emu_ad17c8aa889f3745.sock"}}
+[debug] [2023-09-10T12:28:30.851Z] [worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE"}}
+[debug] [2023-09-10T12:28:30.851Z] [worker-pool] submitRequest(triggerId=asia-northeast2-chatGPT) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=asia-northeast2-chatGPT)"}}
+[info] i  functions: Beginning execution of "asia-northeast2-chatGPT" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Beginning execution of \"asia-northeast2-chatGPT\""}}
+[debug] [2023-09-10T12:28:30.851Z] [worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: BUSY"}}
+[info] >  {"structuredData":true,"severity":"INFO","message":"firebase functionsに届いたよ!"} {"user":{"structuredData":true,"severity":"INFO","message":"firebase functionsに届いたよ!"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"structuredData\":true,\"severity\":\"INFO\",\"message\":\"firebase functionsに届いたよ!\"}"}}
+[info] >  { {"user":"{","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m {"}}
+[info] >    responseBody: { {"user":"  responseBody: {","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   responseBody: {"}}
+[info] >      id: 'chatcmpl-7xDqBhCK2hcB7cAENmea3wZhyBB45', {"user":"    id: 'chatcmpl-7xDqBhCK2hcB7cAENmea3wZhyBB45',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     id: 'chatcmpl-7xDqBhCK2hcB7cAENmea3wZhyBB45',"}}
+[info] >      object: 'chat.completion', {"user":"    object: 'chat.completion',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     object: 'chat.completion',"}}
+[info] >      created: 1694348911, {"user":"    created: 1694348911,","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     created: 1694348911,"}}
+[info] >      model: 'gpt-3.5-turbo-0613', {"user":"    model: 'gpt-3.5-turbo-0613',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     model: 'gpt-3.5-turbo-0613',"}}
+[info] >      choices: [ [Object] ], {"user":"    choices: [ [Object] ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     choices: [ [Object] ],"}}
+[info] >      usage: { prompt_tokens: 35, completion_tokens: 478, total_tokens: 513 } {"user":"    usage: { prompt_tokens: 35, completion_tokens: 478, total_tokens: 513 }","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     usage: { prompt_tokens: 35, completion_tokens: 478, total_tokens: 513 }"}}
+[info] >    } {"user":"  }","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   }"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m }"}}
+[info] >  [ {"user":"[","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m ["}}
+[info] >    '', {"user":"  '',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '',"}}
+[info] >    '天神：福岡市中心部の繁華街であり、ショッピングやグルメが楽しめるエリアです。福岡のシンボル的存在でもあります。', {"user":"  '天神：福岡市中心部の繁華街であり、ショッピングやグルメが楽しめるエリアです。福岡のシンボル的存在でもあります。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '天神：福岡市中心部の繁華街であり、ショッピングやグルメが楽しめるエリアです。福岡のシンボル的存在でもあります。',"}}
+[info] >    '博多：福岡市の一部であり、博多駅周辺には屋台やラーメン店が軒を連ね、福岡グルメを楽しむことができます。', {"user":"  '博多：福岡市の一部であり、博多駅周辺には屋台やラーメン店が軒を連ね、福岡グルメを楽しむことができます。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '博多：福岡市の一部であり、博多駅周辺には屋台やラーメン店が軒を連ね、福岡グルメを楽しむことができます。',"}}
+[info] >    '大濠公園：福岡市中央区に位置する都市公園で、大きな池や緑地が広がり、散策やピクニックが楽しめます。', {"user":"  '大濠公園：福岡市中央区に位置する都市公園で、大きな池や緑地が広がり、散策やピクニックが楽しめます。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '大濠公園：福岡市中央区に位置する都市公園で、大きな池や緑地が広がり、散策やピクニックが楽しめます。',"}}
+[info] >    '福岡城：福岡市中央区にある城跡で、本丸や櫓が残っています。城内では歴史の教育施設や美術館もあります。', {"user":"  '福岡城：福岡市中央区にある城跡で、本丸や櫓が残っています。城内では歴史の教育施設や美術館もあります。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '福岡城：福岡市中央区にある城跡で、本丸や櫓が残っています。城内では歴史の教育施設や美術館もあります。',"}}
+[info] >    '紫の塔：福岡市博多区にある、紫色の外観が特徴的な建物です。カフェやショップが入っており、おしゃれなスポットとして人気です。', {"user":"  '紫の塔：福岡市博多区にある、紫色の外観が特徴的な建物です。カフェやショップが入っており、おしゃれなスポットとして人気です。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '紫の塔：福岡市博多区にある、紫色の外観が特徴的な建物です。カフェやショップが入っており、おしゃれなスポットとして人気です。',"}}
+[info] >    '福岡タワー：福岡市中央区にある展望塔で、福岡の街を一望することができます。夜はライトアップされ、幻想的な雰囲気も楽しめます。', {"user":"  '福岡タワー：福岡市中央区にある展望塔で、福岡の街を一望することができます。夜はライトアップされ、幻想的な雰囲気も楽しめます。',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '福岡タワー：福岡市中央区にある展望塔で、福岡の街を一望することができます。夜はライトアップされ、幻想的な雰囲気も楽しめます。',"}}
+[info] >    '海の中道海浜公園：福岡市東区に位置する都市公園で、広大な敷地には芝生広場やプール、野球場などがあり、レジャーやスポーツが楽しめます。' {"user":"  '海の中道海浜公園：福岡市東区に位置する都市公園で、広大な敷地には芝生広場やプール、野球場などがあり、レジャーやスポーツが楽しめます。'","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   '海の中道海浜公園：福岡市東区に位置する都市公園で、広大な敷地には芝生広場やプール、野球場などがあり、レジャーやスポーツが楽しめます。'"}}
+[info] >  ] {"user":"]","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m ]"}}
+[debug] [2023-09-10T12:28:47.489Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "asia-northeast2-chatGPT" in 16638.322292ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finished \"asia-northeast2-chatGPT\" in 16638.322292ms"}}
+[debug] [2023-09-10T12:28:47.490Z] [worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE"}}
+[debug] [2023-09-10T12:28:47.490Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2023-09-10T12:28:47.490Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2023-09-10T12:28:47.490Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}
+[debug] [2023-09-10T12:41:28.985Z] [work-queue] {"queuedWork":["/nuxt-navi/asia-northeast2/chatGPT-2023-09-10T12:41:28.985Z"],"queueLength":1,"runningWork":[],"workRunningCount":0}
+[debug] [2023-09-10T12:41:28.986Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":["/nuxt-navi/asia-northeast2/chatGPT-2023-09-10T12:41:28.985Z"],"workRunningCount":1}
+[debug] [2023-09-10T12:41:28.986Z] Accepted request POST /nuxt-navi/asia-northeast2/chatGPT --> asia-northeast2-chatGPT
+[debug] [2023-09-10T12:41:28.991Z] [functions] Runtime ready! Sending request! {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Runtime ready! Sending request!"}}
+[debug] [2023-09-10T12:41:28.991Z] [functions] Got req.url=/nuxt-navi/asia-northeast2/chatGPT, mapping to path=/ {"metadata":{"emulator":{"name":"functions"},"message":"[functions] Got req.url=/nuxt-navi/asia-northeast2/chatGPT, mapping to path=/"}}
+[debug] [2023-09-10T12:41:28.991Z] [worker-pool] submitRequest(triggerId=asia-northeast2-chatGPT) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] submitRequest(triggerId=asia-northeast2-chatGPT)"}}
+[info] i  functions: Beginning execution of "asia-northeast2-chatGPT" {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Beginning execution of \"asia-northeast2-chatGPT\""}}
+[debug] [2023-09-10T12:41:28.992Z] [worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: BUSY {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: BUSY"}}
+[info] >  {"structuredData":true,"severity":"INFO","message":"firebase functionsに届いたよ!"} {"user":{"structuredData":true,"severity":"INFO","message":"firebase functionsに届いたよ!"},"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m {\"structuredData\":true,\"severity\":\"INFO\",\"message\":\"firebase functionsに届いたよ!\"}"}}
+[info] >  { {"user":"{","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m {"}}
+[info] >    responseBody: { {"user":"  responseBody: {","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   responseBody: {"}}
+[info] >      id: 'chatcmpl-7xE2jjL1m0bsicbkJhGe6Zj32dDQE', {"user":"    id: 'chatcmpl-7xE2jjL1m0bsicbkJhGe6Zj32dDQE',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     id: 'chatcmpl-7xE2jjL1m0bsicbkJhGe6Zj32dDQE',"}}
+[info] >      object: 'chat.completion', {"user":"    object: 'chat.completion',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     object: 'chat.completion',"}}
+[info] >      created: 1694349689, {"user":"    created: 1694349689,","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     created: 1694349689,"}}
+[info] >      model: 'gpt-3.5-turbo-0613', {"user":"    model: 'gpt-3.5-turbo-0613',","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     model: 'gpt-3.5-turbo-0613',"}}
+[info] >      choices: [ [Object] ], {"user":"    choices: [ [Object] ],","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     choices: [ [Object] ],"}}
+[info] >      usage: { prompt_tokens: 35, completion_tokens: 514, total_tokens: 549 } {"user":"    usage: { prompt_tokens: 35, completion_tokens: 514, total_tokens: 549 }","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m     usage: { prompt_tokens: 35, completion_tokens: 514, total_tokens: 549 }"}}
+[info] >    } {"user":"  }","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m   }"}}
+[info] >  } {"user":"}","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m }"}}
+[info] >  [ '', '大濠公園', '博多駅', '天神', '福岡城', '博多湾', '福岡市博物館', '福岡ドーム' ] {"user":"[ '', '大濠公園', '博多駅', '天神', '福岡城', '博多湾', '福岡市博物館', '福岡ドーム' ]","metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"\u001b[90m> \u001b[39m [ '', '大濠公園', '博多駅', '天神', '福岡城', '博多湾', '福岡市博物館', '福岡ドーム' ]"}}
+[debug] [2023-09-10T12:41:48.393Z] Finishing up request with event=pause {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=pause"}}
+[info] i  functions: Finished "asia-northeast2-chatGPT" in 19401.109291ms {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finished \"asia-northeast2-chatGPT\" in 19401.109291ms"}}
+[debug] [2023-09-10T12:41:48.399Z] [worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"[worker-asia-northeast2-chatGPT-dded4d89-54c7-4fc4-98e3-9b8dbff06f62]: IDLE"}}
+[debug] [2023-09-10T12:41:48.399Z] Finishing up request with event=finish {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=finish"}}
+[debug] [2023-09-10T12:41:48.399Z] Finishing up request with event=close {"metadata":{"emulator":{"name":"functions"},"function":{"name":"asia-northeast2-chatGPT"},"extension":{},"message":"Finishing up request with event=close"}}
+[debug] [2023-09-10T12:41:48.399Z] [work-queue] {"queuedWork":[],"queueLength":0,"runningWork":[],"workRunningCount":0}

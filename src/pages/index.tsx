@@ -102,19 +102,38 @@ function Home() {
   const callChatGPT = async () => {
     setIsLoading(true);
     try {
-      const getRes = await fetch(process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT as string, {
+      // ここで開発環境だったら、localhostを参照するようにする
+      let url = '';
+      if (process.env.NODE_ENV === 'development') {
+        url = process.env.NEXT_PUBLIC_LOCAL_ENDPOINT as string;
+      } else {
+        url = process.env.NEXT_PUBLIC_PRODUCTION_ENDPOINT as string;
+      }
+      console.log({
+        url,
+      });
+      const getRes = await fetch(url as string, {
         method: 'POST',
         body: JSON.stringify(inputText),
       });
       const responseBody = await getRes.json();
+      console.log(responseBody);
+      const extractName = (item: string) => {
+        const match = item.match(/^([^：]+)/);
+        return match ? match[1] : null;
+      };
+
       const filteredEmptyTripLists = responseBody.filter((tripList: any) => tripList !== '');
-      console.log('filteredEmptyTripLists', filteredEmptyTripLists);
-      if (filteredEmptyTripLists.length < 6) {
+
+      const namesList = filteredEmptyTripLists.map(extractName).filter(Boolean);
+
+      console.log('filteredEmptyTripLists', namesList);
+      if (namesList.length < 4) {
         errorToaster('該当するスポットがありませんでした');
         setIsLoading(false);
         return;
       }
-      await setTripLists(filteredEmptyTripLists);
+      await setTripLists(namesList);
     } catch (error: any) {
       console.log('error', error);
       setIsLoading(false);

@@ -55,8 +55,10 @@ export const chatGPT = functions.region('asia-northeast2').https.onRequest(async
   })
     .then(async (response) => {
       const responseBody = await response.json();
+      console.log({ responseBody });
       // レスポンス結果をコンソールに出力する
       const format = responseBody.choices[0].message.content.split(/\s*[1-9]\.\s*/).map((i: any) => i.replace(/[-:].*/, ''));
+      console.log(format);
       res.status(200).json(format);
     })
     .catch((err) => {
